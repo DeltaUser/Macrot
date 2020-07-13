@@ -34,6 +34,7 @@ app.use(bodyParser.json());
         res.send(stats);
     });
     app.get('/api/stats', (req, res) => {
+        console.log(JSON.stringify(stats));
         if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, JSON.stringify(stats)));
         res.send(stats);
     });
