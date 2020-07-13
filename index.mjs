@@ -12,6 +12,10 @@ const limiter = rateLimit({
     max: 5000
 });
 
+function html(title, url, image, description) {
+    return `<!DOCTYPE html><html><head><title>${title}</title><meta property="og:title" content="${title}"/><meta property="og:type" content="website"/><meta property="og:url" content="${url}"/><meta property="og:image" content="${image}"/><meta property="og:description" content="${description}"/></head><body>${description}</body></html>`;
+}
+
 app.set('trust proxy', 1);
 app.use(limiter);
 app.use(useragent.express());
@@ -30,7 +34,7 @@ app.use(bodyParser.json());
         res.send(stats);
     });
     app.get('/api/stats', (req, res) => {
-        console.log(req.useragent)
+        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, JSON.stringify(stats)));
         res.send(stats);
     });
 })();
