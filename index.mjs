@@ -34,8 +34,8 @@ app.use(bodyParser.json());
         res.send(stats);
     });
     app.get('/api/stats', (req, res) => {
-        console.log(JSON.stringify(stats).replace(/"/g, '\"'));
-        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, JSON.stringify(stats).replace(/"/g, '\"')));
+        console.log(JSON.stringify(stats).replace(/"/g, '\\"'));
+        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, JSON.stringify(stats).replace(/"/g, '\\"')));
         res.send(stats);
     });
 })();
