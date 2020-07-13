@@ -13,7 +13,7 @@ const limiter = rateLimit({
 });
 
 function html(title, url, image, description) {
-    return `<!DOCTYPE html><html><head><title>${title}</title><meta property="og:title" content="${title}"/><meta property="og:type" content="website"/><meta property="og:url" content="${url}"/><meta property="og:image" content="${image}"/><meta property="og:description" content='${description}'/></head></html>`;
+    return `<!DOCTYPE html><html><head><title>${title}</title><meta property="og:title" content="${title}"/><meta property="og:type" content="website"/><meta property="og:url" content="${url}"/><meta property="og:image" content="${image}"/><meta property="og:description" content="${description}"/></head></html>`;
 }
 
 app.set('trust proxy', 1);
@@ -34,8 +34,7 @@ app.use(bodyParser.json());
         res.send(stats);
     });
     app.get('/api/stats', (req, res) => {
-        console.log(JSON.stringify(stats));
-        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, JSON.stringify(stats)));
+        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, `Statistics sent from the main page at (https://deltauser.github.io/macrot/).`));
         res.send(stats);
     });
 })();
