@@ -18,6 +18,9 @@ app.use(bodyParser.json());
 
 (async () => {
     app.listen(process.env.PORT || 5000, () => console.log(`[Interact] Listening to http://localhost:${process.env.PORT || 5000}/`));
+    app.get('/', (req, res) => {
+        res.redirect('https://deltauser.github.io/macrot/');
+    });
     app.post('/api/stats', (req, res) => {
         if(!stats.dates[new Date().toLocaleString().split(',')[0]]) stats.dates[new Date().toLocaleString().split(',')[0]] = {keys: 0, clicks: 0};
         stats.dates[new Date().toLocaleString().split(',')[0]].keys += req.body.keys;
