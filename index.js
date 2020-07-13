@@ -56,9 +56,10 @@ $(document).ready(() => {
                 }
                 console.log(keys);
             });
-            setInterval(() => {
+            setInterval(async () => {
                 seconds += 1;
                 if(seconds === 6) {
+                    await fetch('https://macrot.herokuapp.com/api/stats', {method: "POST", headers: {'Content-Type': 'application/json'}, mode: 'cors', body: JSON.stringify({clicks, keys})});
                     clicks = 0;
                     seconds = 0;
                     keys = 0;
