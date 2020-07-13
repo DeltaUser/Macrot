@@ -2,8 +2,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
+import useragent from 'express-useragent';
 const app = express();
-app.set('trust proxy', 1);
 const stats = {
     dates: {}
 };
@@ -11,8 +11,10 @@ const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 5000
 });
-   
+
+app.set('trust proxy', 1);
 app.use(limiter);
+app.use(useragent.express());
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -28,6 +30,7 @@ app.use(bodyParser.json());
         res.send(stats);
     });
     app.get('/api/stats', (req, res) => {
+        console.log(req.useragent)
         res.send(stats);
     });
 })();
