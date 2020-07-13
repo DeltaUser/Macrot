@@ -54,7 +54,6 @@ $(document).ready(() => {
                 if(keys > 200) {
                     $('[id="QK"]')[0].innerText = `Keyboard macros decected, ${keys} keys pressed in ${seconds} seconds.`;
                 }
-                console.log(keys);
             });
             setInterval(async () => {
                 seconds += 1;
