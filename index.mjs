@@ -13,7 +13,7 @@ const limiter = rateLimit({
 });
 
 function html(title, url, image, description) {
-    return `<!DOCTYPE html><html><head><title>${title}</title><meta property="og:title" content="${title}"/><meta property="og:type" content="website"/><meta property="og:url" content="${url}"/><meta property="og:image" content="${image}"/><meta property="og:description" content="${description}"/></head></html>`;
+    return `<!DOCTYPE html><html><head><meta name="author" content="DeltaUser"><title>${title}</title><meta property="og:title" content="${title}"><meta property="og:type" content="website"><meta property="og:url" content="${url}"><meta property="og:image" content="${image}"><meta property="og:description" content="${description}"></head></html>`;
 }
 
 app.set('trust proxy', 1);
