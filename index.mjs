@@ -34,7 +34,7 @@ app.use(bodyParser.json());
         res.send(stats);
     });
     app.get('/api/stats', (req, res) => {
-        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', null, `Statistics sent from the main page at (https://deltauser.github.io/macrot/).`));
+        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', 'https://macrot.herokuapp.com/api/stats', `Statistics sent from the main page at (https://deltauser.github.io/macrot/).`));
         res.send(stats);
     });
 })();
