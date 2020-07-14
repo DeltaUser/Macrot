@@ -27,14 +27,8 @@ app.use(bodyParser.json());
     app.get('/', (req, res) => {
         res.redirect('https://deltauser.github.io/macrot/');
     });
-    app.post('/api/stats', (req, res) => {
-        if(!stats.dates[new Date().toLocaleString().split(',')[0]]) stats.dates[new Date().toLocaleString().split(',')[0]] = {keys: 0, clicks: 0};
-        stats.dates[new Date().toLocaleString().split(',')[0]].keys += req.body.keys;
-        stats.dates[new Date().toLocaleString().split(',')[0]].clicks += req.body.clicks;
-        res.send(stats);
-    });
-    app.get('/api/stats', (req, res) => {
-        if(req.useragent.isBot) return res.send(html('Statistics', 'https://macrot.herokuapp.com/api/stats', 'https://deltauser.github.io/macrot/icon.png', JSON.stringify(stats).replace(/"/g, "\"")));
-        res.send(stats);
+    app.get('/api/status', (req, res) => {
+        if(req.useragent.isBot) return res.send(html('Status', 'https://macrot.herokuapp.com/api/status', 'https://deltauser.github.io/macrot/icon.png', `Current status.`));
+        res.send({dashboard: false});
     });
 })();
