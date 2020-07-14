@@ -45,4 +45,8 @@ $(document).ready(async () => {
     $('.button-container').css('background-color', 'white');
     $('button').css('background-color', 'white');
     $('button').css('color', 'black');
+    $('[id="createMacro"]').click(async () => {
+        $('[class="button-container"]').fadeOut();
+        await new Promise((resolve) => setTimeout(resolve, 250));
+    });
 });
