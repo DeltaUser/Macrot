@@ -29,6 +29,6 @@ app.use(bodyParser.json());
     });
     app.get('/api/status', (req, res) => {
         if(req.useragent.isBot) return res.send(html('Status', 'https://macrot.herokuapp.com/api/status', 'https://deltauser.github.io/macrot/icon.png', `Current status.`));
-        res.send({dashboard: false});
+        res.send({dashboard: true});
     });
 })();
