@@ -2,7 +2,7 @@ $(document).ready(async () => {
     $('[id="status"]')[0].innerText = 'Loading background..';
     await new Promise((resolve) => setTimeout(resolve, 250));
     Particles.init({
-        selector: '.background',
+        selector: '.backgroundW',
         color: 'black'
     });
     $('[id="status"]')[0].innerText = 'Loading status..';

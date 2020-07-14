@@ -1,8 +1,30 @@
+function addHandler(event, handler) {
+    return $(document).on(event, handler);
+}
+
+function triggerHandler(event, callback) {
+    const dispatched = document.dispatchEvent(event);
+    return callback ? callback() : dispatched;
+}
+
+function removeHandler(event) {
+    return $(document).off(event);
+}
+
+function replaceHandler(event, handler) {
+    removeEvent(event);
+    return addHandler(event, handler);
+}
+
+function getHandlers(event, name) {
+    return !name ? $._data($(document)[0], 'events')[event] : $._data($(document)[0], 'events')[event].filter(e => e.type === event && e.namespace && e.namespace === name);
+}
+
 $(document).ready(async () => {
     $('[id="status"]')[0].innerText = 'Loading dashboard..';
     await new Promise((resolve) => setTimeout(resolve, 250));
     Particles.init({
-        selector: '.background',
+        selector: '.backgroundW',
         color: 'black'
     });
     await new Promise((resolve) => setTimeout(resolve, 250));
@@ -10,8 +32,17 @@ $(document).ready(async () => {
     $('[id="status"]').fadeOut();
     $('[id="statusMessage"]').fadeOut();
     await new Promise((resolve) => setTimeout(resolve, 500));
-    $('[id="statusMessage"]')[0].innerText = 'DeltaUser#7836 (Discord)';
-    $('[id="status"]')[0].innerText = 'Dashboard is currently being worked on.';
-    $('[id="status"]').fadeIn();
-    $('[id="statusMessage"]').fadeIn();
+    $('.background').fadeOut();
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    $('.backgroundW').remove();
+    $('.backgroundB').fadeIn();
+    Particles.init({
+        selector: '.backgroundB',
+        color: 'white'
+    });
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    $('.button-container').fadeIn();
+    $('.button-container').css('background-color', 'white');
+    $('button').css('background-color', 'white');
+    $('button').css('color', 'black');
 });

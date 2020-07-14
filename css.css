@@ -1,5 +1,14 @@
-.background {
+.backgroundW {
     position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.backgroundB {
+    position: absolute;
+    background-color: black;
     display: block;
     top: 0;
     left: 0;
@@ -49,7 +58,7 @@ body {
     border-radius: 20px;
     font-size: 5000px;
     background-color: black;
-    margin: 10px;
+    margin: 50px;
 }
 
 .button-container button {
