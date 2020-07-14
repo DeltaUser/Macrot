@@ -20,22 +20,24 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    color: black;
     padding: 200px;
 }
 
 .button-container {
     padding: 10px;
-    background-color: black;
     display: inline-block;
     border-radius: 20px;
-    font-size: 500px;
+    font-size: 5000px;
+    background-color: black;
     margin: 10px;
-    color: black;
 }
 
 .button-container button {
     background-color: white;
+    font-size: 30px;
     padding: 5px 10px;
+    color: black;
     border-radius: 10px;
     font-family: text;
     outline: none;
