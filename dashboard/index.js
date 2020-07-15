@@ -8,45 +8,59 @@ function triggerHandler(event, callback) {
 }
 
 function removeHandler(event) {
+    if(!checkEventExists(event)) return;
     return $(document).off(event);
 }
 
 function replaceHandler(event, handler) {
-    removeEvent(event);
+    removeHandler(event);
     return addHandler(event, handler);
 }
 
-function getHandlers(event, name) {
-    return !name ? $._data($(document)[0], 'events')[event] : $._data($(document)[0], 'events')[event].filter(e => e.type === event && e.namespace && e.namespace === name);
+function checkEventExists(event) {
+    const events = getEvents();
+    if(!events[!event.includes('.') ? event : event.split('.')[0]]) return false;
+    return !event.includes('.') ? Array.isArray(events[event]) : (events[event.split('.')[0]].filter(e => e.type === event.split('.')[0] && e.namespace && e.namespace === event.split('.')[1])).length > 0;
+}
+
+function getData(data) {
+    return $._data($(document)[0], data);
+}
+
+function getEvents() {
+    return getData('events');
+}
+
+function getHandlers(event) {
+    const events = getEvents();
+    return !event.includes('.') ? events[event] : events[event].filter(e => e.type === event.split('.')[0] && e.namespace && e.namespace === event.split('.')[1]);
+}
+
+function removeKeyHandler(keyEvent, key, shiftKey=false) {
+    return removeHandler(`${keyEvent}.${key}#${shiftKey}`);
+}
+
+function addKeyHandler(keyEvent, key, handler, shiftKey=false, isCustomHandler=false) {
+    if(!handler) return;
+    if(checkEventExists(`${keyEvent}.${key}#${shiftKey}`)) {
+        removeHandler(`${keyEvent}.${key}#${shiftKey}`);
+    }
+    return addHandler(`${keyEvent}.${key}#${shiftKey}`, isCustomHandler ? handler : (e) => {
+        if(e.key === key && e.shiftKey === shiftKey) handler(e);
+    });
 }
 
 $(document).ready(async () => {
-    $('[id="status"]')[0].innerText = 'Loading dashboard..';
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    Particles.init({
-        selector: '.backgroundW',
-        color: 'black'
-    });
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    $('[class="loader-container"]').fadeOut();
-    $('[id="status"]').fadeOut();
-    $('[id="statusMessage"]').fadeOut();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    $('.background').fadeOut();
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    $('.backgroundW').remove();
-    $('.backgroundB').fadeIn();
     Particles.init({
         selector: '.backgroundB',
         color: 'white'
     });
+    $('[class="backgroundB"]').show();
     await new Promise((resolve) => setTimeout(resolve, 250));
-    $('.button-container').fadeIn();
-    $('.button-container').css('background-color', 'white');
-    $('button').css('background-color', 'white');
-    $('button').css('color', 'black');
-    $('[id="createMacro"]').click(async () => {
-        $('[class="button-container"]').fadeOut();
-        await new Promise((resolve) => setTimeout(resolve, 250));
-    });
+    $('[class="tv"]').addClass('_off');
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    $('[id="status"]')[0].innerText = 'Coming soon.';
+    $('[id="status"]').fadeIn();
+    $('[id="statusMessage"]')[0].innerText = 'Inshallah';
+    $('[id="statusMessage"]').fadeIn();
 });

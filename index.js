@@ -24,6 +24,6 @@ $(document).ready(async () => {
     });
     $('[id="status"]').fadeOut();
     $('[class="loader-container"]').fadeOut();
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));   
     $('[id="items"]').show();
 });
