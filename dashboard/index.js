@@ -1,3 +1,5 @@
+let particlejs;
+
 function addHandler(event, handler) {
     return $(document).on(event, handler);
 }
@@ -50,17 +52,21 @@ function addKeyHandler(keyEvent, key, handler, shiftKey=false, isCustomHandler=f
     });
 }
 
+async function timeout(ammount) {
+    return await new Promise((resolve) => setTimeout(resolve, ammount));
+}
+
+async function transformBackground(color, time=300) {
+    await timeout(250);
+    $('[id="particles-js"]').stop().animate({
+        "backgroundColor": $('[id="particles-js"]')[0].style['background-color']
+    }, time);
+    await timeout(100);
+    particlejs.particles.color.value = color;
+    particlesJS("particles-js", particlejs);
+}
+
 $(document).ready(async () => {
-    Particles.init({
-        selector: '.backgroundB',
-        color: 'white'
-    });
-    $('[class="backgroundB"]').show();
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    $('[class="tv"]').addClass('_off');
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    $('[id="status"]')[0].innerText = 'Coming soon.';
-    $('[id="status"]').fadeIn();
-    $('[id="statusMessage"]')[0].innerText = 'Inshallah';
-    $('[id="statusMessage"]').fadeIn();
+    particlejs = new Function(['particlesJS'], await (await fetch('https://raw.githubusercontent.com/DeltaUser/background/master/index.js')).text())(particlesJS);
+    await transformBackground('#000000');
 });
