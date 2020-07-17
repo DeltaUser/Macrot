@@ -59,7 +59,7 @@ async function timeout(ammount) {
 async function transformBackground(color, time=300) {
     await timeout(250);
     $('[id="particles-js"]').stop().animate({
-        "backgroundColor": $('[id="particles-js"]')[0].style['background-color']
+        "backgroundColor": particlejs.particles.color.value
     }, time);
     await timeout(100);
     particlejs.particles.color.value = color;
@@ -67,6 +67,8 @@ async function transformBackground(color, time=300) {
 }
 
 $(document).ready(async () => {
-    particlejs = new Function(['particlesJS'], await (await fetch('https://raw.githubusercontent.com/DeltaUser/background/master/index.js')).text())(particlesJS);
-    await transformBackground('#000000');
+    $('[class="text-container"]').remove();
+    $('body')[0].innerHTML += `<div id="particles-js"></div>`;
+    particlejs = new Function(['particlesJS'], await (await fetch('https://raw.githubusercontent.com/DeltaUser/background/master/index.js')).text())(particlesJS);    
+    await transformBackground('#FFFFFF');
 });
