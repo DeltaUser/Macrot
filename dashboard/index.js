@@ -56,6 +56,33 @@ async function timeout(ammount) {
     return await new Promise((resolve) => setTimeout(resolve, ammount));
 }
 
+function adjust(color, amount) {
+    if(color.includes('rgb')) {
+        let hex = '#';
+        for (var i = 0; i < color.split('(')[1].split(')')[0].split(',').length; i++) {
+            const number = parseInt(color.split('(')[1].split(')')[0].split(',')[i]);
+            hex += number.toString(16).length == 1 ? "0" + number.toString(16) : number.toString(16); /** https://stackoverflow.com/a/5624139 */
+        }
+        color = hex;
+    }
+    return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+} /** https://stackoverflow.com/a/57401891 */
+
+function setButtonHover() {
+    $('button').unbind('hover').hover(
+        (e) => {
+            $(`[id="${e.currentTarget.id}"]`).stop().animate({
+                "backgroundColor": adjust($(`[id="${e.currentTarget.id}"]`).css('background-color'), -20)
+            }, 250);
+        },
+        (e) => {
+            $(`[id="${e.currentTarget.id}"]`).stop().animate({
+                "backgroundColor": adjust($(`[id="${e.currentTarget.id}"]`).css('background-color'), 20)
+            }, 250);
+        }
+    )
+}
+
 async function transformBackground(color, time=300) {
     await timeout(250);
     $('[id="particles-js"]').stop().animate({
